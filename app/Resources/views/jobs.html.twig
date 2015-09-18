@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wir haben Jobs, wir wollen Euch haben!{% endblock %}
+
+{% block navigation %}
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/apps.js') }}"></script>
+<div class="row">
+<link href="{{ asset('./css/apps.css') }}" rel="stylesheet" />
+<div class="large-3 columns">
+<h1><img src="http://placehold.it/400x100&text=Logo"></h1>
+</div>
+<div class="large-9 columns">
+<ul class="button-group right">
+<li><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></li>
+<li><a href="{{ path('seitenlinien-1') }}" class="button">Seitenlinien I</a></li>
+<li><a href="{{ path('seitenlinien-2') }}" class="button">Seitenlinien II</a></li>
+<li><a href="#" class="button">vor meiner Zeit</a></li>
+</ul>
+</div>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="large-4 columns">
+<img src="{{ asset('./img/IMG_1049.JPG') }}" />
+<p>
+ <ul>
+   <li class="t"><h4>Angebot 1</h4>
+    <span class="lielement">
+      ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 2</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 3</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 4</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+ </ul>
+</p>
+</div>
+
+<div class="large-8 columns">
+<h4>We have got jobs for YOU!</h4>
+<div class="row">
+<div class="large-6 columns">
+<p>Die meisten Bergwanderer nehmen diesen <strong>Anstieg</strong>, um hinauf zur Hochplatte zu gehen. Wir folgen der Beschriftung zur Hochplatte hinein in das Roggental auf schmalem Pfad, über eine bei Frost besonders rutschige Brücke auf die andere Bachseite und gelangen nach 40-50 Minuten an den Wandfuß der Hochplatte heran. Jetzt teilt sich der Weg: Links geht es zum Roggentalsattel, rechts zum Weitalpjoch hinauf. Wir halten uns links und steigen konseque/achnt dem Roggentalsattel entgegen.
+<br />
+Den Weg zur Hochblasse weist kein Schild. Am Roggentalsattel folgen wir Pfadspuren nach Süden immer etwas rechts vom Grat haltend.</p>
+</div>
+<div class="large-6 columns">
+<p class="ach">ACH ACH<br/>und es geht weiter. ich schwöre, es geht weiter!<br /><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></p></li>
+<li><form><button class="buttonI" type="submit" form="form1" value="Submit">Submit</button></form></li>
+<p><h4>Fazit hier</h4>
+Der Weg lohnt sich auch für ungeübte; die Aussicht ist grandios!
+<ul>
+ <li>cooler Weg</li>
+ <li>sehr coole Aussicht!</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unsere Login!{% endblock %}
+
+
+
+{% block body %}
+
+<div class="row">
+<div class="large-4 columns">
+<img src="{{ asset('./img/IMG_1049.JPG') }}" />
+<p>
+ <ul>
+   <li class="t"><h4>Angebot 1</h4>
+    <span class="lielement">
+      ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 2</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 3</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 4</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+ </ul>
+</p>
+</div>
+
+<div class="large-8 columns">
+<h4>Meld Dich hier an!</h4>
+
+<div class="large-6 columns">
+{% if error %}
+    <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path('login_check') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="_password" />
+
+    {#
+        If you want to control the URL the user
+        is redirected to on success (more details below)
+        <input type="hidden" name="_target_path" value="/account" />
+    #}
+
+    <button type="submit">login</button>
+</form>
+
+</div>
+<div class="large-6 columns">
+<p class="ach">ACH ACH<br/>und es geht weiter. ich schwöre, es geht weiter!<br /><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></p></li>
+<li><form><button class="buttonI" type="submit" form="form1" value="Submit">Submit</button></form></li>
+<p><h4>Fazit hier</h4>
+Der Weg lohnt sich auch für ungeübte; die Aussicht ist grandios!
+<ul>
+ <li>LOGIN</li>
+ <li>hier gehts weiter!</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

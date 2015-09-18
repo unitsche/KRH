@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}We are the team!{% endblock %}
+
+
+{% block body %}
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/apps.js') }}"></script>
+<div class="row">
+<link href="{{ asset('./css/apps.css') }}" rel="stylesheet" />
+
+<div class="row">
+<div class="large-4 columns">
+<img src="{{ asset('./img/IMG_1049.JPG') }}" />
+<p>
+ <ul>
+   <li class="t"><h4>Angebot 1</h4>
+    <span class="lielement">
+      ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 2</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 3</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+   <li class="t"><h4>Angebot 4</h4>
+    <span class="lielement">
+    ich bin nur dummy tesxt und sonst nix. sonst nix.
+    </span>
+    </li>
+ </ul>
+</p>
+</div>
+
+<div class="large-8 columns">
+<h4>Meld Dich hier an!</h4>
+
+<div class="large-6 columns">
+<h5>La vida se ta va!</h5>
+Bereits am Donnerstagabend waren Mitarbeiter des Deutschen Roten Kreuzes von Asylgegnern beim Aufbau der Zeltstadt behindert und in einem Fall auch bedroht worden. Am Freitagmittag hatte der NPD-Kreisverband Dresden zur Demo gegen ein Notaufnahmelager aufgerufen. Etwa 200 Asylgegner aus dem rechten Lager standen 350 Asylbefürwortern gegenüber.
+
+Inzwischen sind nach Polizeiangaben etwa 470 Flüchtlinge in der Zeltstadt im Stadtteil Friedrichstadt eingetroffen. Insgesamt sollen an diesem Wochenende laut Landesdirektion 800 Asylbewerber kommen. Betreiber des Lagers ist das DRK. Um die Sicherheit der Flüchtlinge zu garantieren, will das Innenministerium mehrere Züge der Polizei und der Bereitschaftspolizei in die Friedrichstadt verlegen.
+</div>
+<div class="large-6 columns">
+<p class="ach">ACH ACH<br/>und es geht weiter. ich schwöre, es geht weiter!<br /><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></p></li>
+<li><form><button class="buttonI" type="submit" form="form1" value="Submit">Submit</button></form></li>
+<p><h4>Fazit hier</h4>
+Der Weg lohnt sich auch für ungeübte; die Aussicht ist grandios!
+<ul>
+ <li>LOGIN</li>
+ <li>hier gehts weiter!</li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+
+<script>
+  document.write('<script src=js/vendor/' +
+  ('__proto__' in {} ? 'zepto' : 'jquery') +
+  '.js><\/script>')
+  </script>
+<script src="{{ asset('js/vendor/jquery.js') }}"></script>
+<script src="{{ asset ('js/foundation.min.js') }}"></script>
+<script>
+    $(document).foundation();
+  </script>
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/foundation/foundation.orbit.js') }}"></script>
+<script>
+      $(document).foundation();
+
+      var doc = document.documentElement;
+      doc.setAttribute('data-useragent', navigator.userAgent);
+    </script>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+.ach {
+  text-align: center;
+  background: white;
+  color: red;
+}
+
+.lielement {
+  background: white;
+  border: 1px solid red;
+  display: none;
+  padding:10px;
+}
+
+.error {
+  color: red;
+}
+
+.button {
+
+	color:grey;
+	background-color: white;
+}
+
+button:hover, button:focus, .button:hover, .button:focus {
+    background-color: red; }
+button:hover, button:focus, .button:hover, .button:focus {
+    color: #FFFFFF; }
+
+body {
+	background-color: grey;
+}
+
+ a {
+  color: red;
+  line-height: inherit;
+  text-decoration: none; }
+  a:hover, a:focus {
+    color: orange; }
+  a img {
+    border: none; }
+
+.row {
+	background-color: #FFFFFF;
+}

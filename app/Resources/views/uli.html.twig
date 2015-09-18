@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ulis Seite - er erzählt seine Geschichte{% endblock %}
+
+{% block navigation %}
+<div class="row">
+<div class="large-3 columns">
+<h1><img src="http://placehold.it/400x100&text=Logo"></h1>
+</div>
+<div class="large-9 columns">
+<ul class="button-group right">
+<li><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></li>
+<li><a href="{{ path('seitenlinien-1') }}" class="button">Seitenlinien I</a></li>
+<li><a href="{{ path('seitenlinien-2') }}" class="button">Seitenlinien II</a></li>
+<li><a href="#" class="button">vor meiner Zeit</a></li>
+</ul>
+</div>
+</div>
+{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="large-12 columns">
+<img src="{{ asset('./img/berge.jpg') }}" />
+
+<hr>
+</div>
+</div>
+ 
+<div class="row">
+<div class="large-4 columns">
+<img src="{{ asset('./img/IMG_1049.JPG') }}" />
+</div>
+<div class="large-8 columns">
+<h4>Der Weg zur Hochblasse</h4>
+<div class="row">
+<div class="large-6 columns">
+<p>
+  <div class="icon-bar five-up" role="navigation">
+  <a class="item" aria-labelledby="#itemlabel1">
+    <img src="{{ asset('./img/foundation-icons/svgs/fi-mail.svg') }}">
+    <label id='itemlabel1'>Home</label>
+  </a>
+  </a>
+  <a class="item" aria-labelledby="#itemlabel2">
+    <img src="{{ asset('./img/foundation-icons/svgs/fi-info.svg') }}">
+    <label id='itemlabel3'>Info</label>
+  </a>
+  <a class="item" aria-labelledby="#itemlabel3">
+    <img src="{{ asset('./img/foundation-icons/svgs/fi-mail.svg') }}">
+    <label id='itemlabel3'>Mail</label>
+  <a class="item" aria-labelledby="#itemlabel4">
+    <img src="{{ asset('./img/foundation-icons/svgs/fi-like.svg') }}">
+    <label id='itemlabel3'>DH</label>
+  </a>
+</div>
+
+</p>
+</div>
+<div class="large-6 columns">
+<p> Trittsicherheit und Schwindelfreiheit werden nicht über alle Maßen beansprucht, doch sollte man ein gute Portion davon mitbringen.</p>
+<p>Der Pfad ist nie sonderlich steil oder ausgesetzt und führt durch meist grasiges Gelände. Öfters weichen wir etwas in den Westhang aus. Bereits nach 15 bis 20 min ab Roggentalsattel stehen wir am Gipfel der Hochblasse.</p>
+<p><h4>Fazi hier</h4>
+Der Weg lohnt sich auch für ungeübte; die Aussicht ist grandios!
+<ul>
+ <li>cooler Weg</li>
+ <li>sehr coole Aussicht!</li>
+</ul>
+<ul class="vcard">
+  <li class="fn">Uli Nitsche</li>
+  <li class="street-address">Specklinplatz 20</li>
+  <li class="locality">München</li>
+  <li><span class="state">Deutschland</span>, <span class="zip">81377</span></li>
+  <li class="email"><a href="#">u.nitsche@gmail.com</a></li>
+</ul>
+</p>
+</div>
+</div>
+</div>
+</div>
+ 
+<div class="row">
+<div class="large-8 columns">
+<h4>Hochblasse als Skitour</h4>
+<p>Ab der Bleckenau geht die eigentliche Skitour los, zunächst recht lange das Tälchen bis zur Jägerhütte, dann am Sommerweg zum Ochsenanger (hier ab und zu mal aper), dann wie im Skitourenführer beschrieben auf den Westkamm der Hochblasse und über diesen bis zum Gipfel. Was sich angesichts der geringen Schneelage und der vielen Latschen gar nicht so einfach gestaltete..</p>
+<p>Fazit: Landschaftlich wunderbare Runde bei bestem Wetter, ab der Bleckenau bis auf zwei Schneeschuhgeher keinen Menschen getroffen. Für die derzeitigen Verhältnisse gar nicht so schlecht. Die Runde zieht sich allerdings schon.</p>
+</div>
+<div class="large-4 columns">
+<img src="{{ asset('./img/IMG_20120921_140405.jpg') }}" />
+</div>
+</div>
+{% endblock %}

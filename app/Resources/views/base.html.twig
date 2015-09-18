@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" >
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Test Application{% endblock %}</title>
+    </head>
+  {% block stylesheets %}
+      <link href="{{ asset('./css/normalize.css') }}" rel="stylesheet" />
+      <link href="{{ asset('./css/foundation.css') }}" rel="stylesheet" />
+      <link href="{{ asset('./css/apps.css') }}" rel="stylesheet" />
+  {% endblock %}
+
+</head>
+<body>
+
+{% block navigation %}
+<div class="row">
+<div class="large-3 columns">
+<h1><img src="http://placehold.it/400x100&text=Logo"></h1>
+</div>
+<div class="large-9 columns">
+<ul class="button-group right">
+<li><a href="{{ path('ulispage') }}" class="button">Hauptlinien</a></li>
+<li><a href="{{ path('seitenlinien-1') }}" class="button">Seitenlinien I</a></li>
+<li><a href="{{ path('seitenlinien-2') }}" class="button">Seitenlinien II</a></li>
+<li>
+<a href="#" data-dropdown="drop1" aria-controls="drop1" aria-expanded="false" class="button dropdown">Nebenlinien</a>
+<ul id="drop1" data-dropdown-content class="f-dropdown" aria-hidden="true">
+  <li><a href="{{ path('ulispage') }}">Kleine Nebenlinie</a></li>
+  <li><a href="{{ path('kanzlei') }}">Gebogene Nebenlinie</a></li>
+  <li><a href="#">Kurze Nebenlinie</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+{% endblock  %}
+
+{% block body %}
+{% endblock %}
+
+<!-- footer  -->
+{% block footer %}
+
+<footer class="row">
+<div class="large-12 columns">
+<hr/>
+
+<div class="row">
+<div class="large-6 columns">
+<p>&copy; Copyright no one at all. Go to town and keep cool!</p>
+</div>
+<div class="large-6 columns">
+<ul class="inline-list right">
+<li><a href="#">Impressum</a></li>
+<li><a href="{{ path('team') }}">Team</a></li>
+<li><a href="{{ path('jobs') }}">Jobs!!</a></li>
+<li><a href="#">Werbepartner</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+{% endblock %}
+<!-- footer ends here -->
+</body>
+</html>
