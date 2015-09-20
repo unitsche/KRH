@@ -1,3 +1,4 @@
-image: unitsche/nginx-whit-git:latest
+#image: unitsche/nginx-whit-git
+image: bradrydzewski/node:0.10
 script:
   - echo hello world
