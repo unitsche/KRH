@@ -1,4 +1,4 @@
 #image: unitsche/nginx-whit-git
-image: bradrydzewski/node:0.10
+image: samueldebruyn/debian-git
 script:
   - echo hello world
