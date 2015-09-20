@@ -1,3 +1,3 @@
-image: github.com/dockerfile/nginx:latest
+image: dockerfile/nginx:latest
 script:
   - echo hello world
