@@ -1,4 +1,3 @@
-#image: unitsche/nginx-whit-git
-image: samueldebruyn/debian-git
+image: unitsche/nginx-with-git
 script:
   - echo hello world
