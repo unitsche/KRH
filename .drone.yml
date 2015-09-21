@@ -1,3 +1,3 @@
-image: unitsche/nginx-with-git:latest
+image: https://hub.docker.com/unitsche/nginx-with-git:latest
 script:
   - echo hello world
