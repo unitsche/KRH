@@ -1,6 +1,6 @@
 image: unitsche/nginx-with-git
 script:
- - echo hello world
+ - echo hello world I love you!
 notify:
   email:
     recipients:
