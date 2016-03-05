@@ -3,6 +3,8 @@
 namespace unBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Knp\DoctrineBehaviors\Model as ORMBehaviors;
+
 
 /**
  * Vocabulary
@@ -12,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Vocabulary
 {
+     use ORMBehaviors\Sluggable\Sluggable;
+
     /**
      * @var integer
      *
@@ -91,4 +95,15 @@ class Vocabulary
     {
         return $this->german;
     }
+
+    public function getSluggableFields()
+    {
+        return [ 'german' ];
+    }
+
+    public function generateSlugValue($values)
+    {
+        return implode('-', $values);
+    }
+
 }
