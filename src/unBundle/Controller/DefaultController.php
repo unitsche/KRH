@@ -8,6 +8,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use unBundle\Entity\Vocabulary;
+use unBundle\Entity\Product;
+use unBundle\Entity\Category;
+use unBundle\Entity\Task;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DefaultController extends Controller
 {
@@ -104,4 +110,106 @@ class DefaultController extends Controller
     {
       return $this->render('kanzlei.html.twig');
     }
+
+    
+    /**
+     * @Route("product", name="product")
+     */
+    public function createAction()
+    {
+      $product = new Product();
+      $product->setName('A Foo Bar');
+      $product->setPrice('19.99');
+      $product->setDescription('Lorem ipsum dolor');
+
+      $em = $this->getDoctrine()->getManager();
+
+      $em->persist($product);
+      $em->flush();
+
+      return $this->render('product.html.twig');
+     }
+
+
+    /**
+     * @Route("newtask", name="newtask")
+     */
+    public function newAction(Request $request)
+    {
+    
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+      'SELECT DISTINCT c.name
+       FROM unBundle:Category c');
+
+    $categories = $query->getResult();
+
+    $task     = new Task();
+    $category = new Category();
+
+    $form = $this->createFormBuilder($task)
+    ->add('task', 'text', array(
+      'attr' => array('minlength' => 4),
+      'label'  => 'Task Titel',)
+      )
+    ->add('dueDate', 'date', array(
+    'widget' => 'single_text',
+    'format' => 'yyyy-MM-dd',)
+    )
+
+    ->add('save', 'submit', array('label' => 'Create Task'))
+    ->getForm(); 
+
+
+    $category->setName("Aloha");
+    $task->setCategory($category); 
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($task);
+      $em->persist($category);
+      $em->flush();
+
+      return $this->redirectToRoute('tasks_success');
+    }
+
+    return $this->render('new.html.twig', array(
+        'form' => $form->createView(),
+    ));
+  }
+
+   /**
+     * @Route("tasks_success", name="tasks_success")
+     */
+  public function task_successAction(Request $request)
+  {
+    //$repository = $this->getDoctrine()->getRepository('unBundle:Task');
+    $em = $this->getDoctrine()->getManager();
+    $tasks = $em->getRepository('unBundle:Task')
+    ->findAllOrderedBydueDate();
+
+    return $this->render('tasks_success.html.twig', array('tasks' => $tasks));
+  }
+
+   /**
+     * @Route("/task/{slug}", name="task_success")
+     */  
+  public function getTaskBySlugAction($slug) 
+  {
+    $slugURL = $slug;
+
+    $em = $this->getDoctrine()->getManager();
+    $query = $em->createQuery(
+      'SELECT t
+      FROM unBundle:Task t
+      WHERE t.slug = :slug'
+    )->setParameter('slug', $slugURL);
+
+  $task = $query->setMaxResults(1)->getOneOrNullResult();
+  $name = $task->getCategory()->getName();
+
+
+    return $this->render('task_success.html.twig', array('task' => $task, 'name' => $name));
+  }
 }

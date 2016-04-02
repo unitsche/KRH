@@ -45,7 +45,7 @@ class JsonEncoder implements EncoderInterface, DecoderInterface
      */
     public function getLastEncodingError()
     {
-        trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Catch the exception raised by the Symfony\Component\Serializer\Encoder\JsonEncode::encode() method instead to get the last JSON encoding error.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Catch the exception raised by the Symfony\Component\Serializer\Encoder\JsonEncode::encode() method instead to get the last JSON encoding error.', E_USER_DEPRECATED);
 
         return $this->encodingImpl->getLastError();
     }
@@ -59,7 +59,7 @@ class JsonEncoder implements EncoderInterface, DecoderInterface
      */
     public function getLastDecodingError()
     {
-        trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Catch the exception raised by the Symfony\Component\Serializer\Encoder\JsonDecode::decode() method instead to get the last JSON decoding error.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.5 and will be removed in 3.0. Catch the exception raised by the Symfony\Component\Serializer\Encoder\JsonDecode::decode() method instead to get the last JSON decoding error.', E_USER_DEPRECATED);
 
         return $this->decodingImpl->getLastError();
     }
@@ -100,26 +100,13 @@ class JsonEncoder implements EncoderInterface, DecoderInterface
      * Resolves json_last_error message.
      *
      * @return string
+     *
+     * @deprecated since 2.8, to be removed in 3.0. Use json_last_error_msg() instead.
      */
     public static function getLastErrorMessage()
     {
-        if (function_exists('json_last_error_msg')) {
-            return json_last_error_msg();
-        }
+        @trigger_error('The '.__METHOD__.' method is deprecated since version 2.8 and will be removed in 3.0. Use json_last_error_msg() instead.', E_USER_DEPRECATED);
 
-        switch (json_last_error()) {
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded';
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch';
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found';
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON';
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
-            default:
-                return 'Unknown error';
-        }
+        return json_last_error_msg();
     }
 }

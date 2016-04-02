@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task "{{task.task}}"{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="large-12 columns">
+<img src="{{ asset('./img/ardeche.jpg') }}" />
+
+<hr>
+</div>
+</div>
+
+<div class="row">
+ <div class="small-12 columns">
+   <h2>Einzelansicht</h2>
+   <p>{{task.task}}</p>
+   <p>Diese Aufgabe ist fällig am: {{task.duedate|date("d.m.Y")}}</p>
+   <p>Kategorie: <a href="">{{ name }}</a></p>
+ </div>
+</div>
+
+<footer class="row">
+
+</footer>
+<script>
+  document.write('<script src=js/vendor/' +
+  ('__proto__' in {} ? 'zepto' : 'jquery') +
+  '.js><\/script>')
+  </script>
+<script src="{{ asset('js/vendor/jquery.js') }}"></script>
+<script src="{{ asset ('js/foundation.min.js') }}"></script>
+<script>
+    $(document).foundation();
+
+      var doc = document.documentElement;
+      doc.setAttribute('data-useragent', navigator.userAgent);
+    </script>
+{% endblock %}

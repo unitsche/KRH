@@ -8,5 +8,5 @@ class_name: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
-            url: http://localhost
+            url: http://voctrainer.int/app_dev.php
         - \Helper\Acceptance

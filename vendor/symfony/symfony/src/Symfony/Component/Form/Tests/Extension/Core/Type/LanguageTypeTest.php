@@ -24,25 +24,35 @@ class LanguageTypeTest extends TestCase
         parent::setUp();
     }
 
-    public function testCountriesAreSelectable()
+    /**
+     * @group legacy
+     */
+    public function testLegacyName()
     {
         $form = $this->factory->create('language');
+
+        $this->assertSame('language', $form->getConfig()->getType()->getName());
+    }
+
+    public function testCountriesAreSelectable()
+    {
+        $form = $this->factory->create('Symfony\Component\Form\Extension\Core\Type\LanguageType');
         $view = $form->createView();
         $choices = $view->vars['choices'];
 
-        $this->assertContains(new ChoiceView('English', 'en', 'en'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('British English', 'en_GB', 'en_GB'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('American English', 'en_US', 'en_US'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('French', 'fr', 'fr'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('Burmese', 'my', 'my'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('en', 'en', 'English'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('en_GB', 'en_GB', 'British English'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('en_US', 'en_US', 'American English'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('fr', 'fr', 'French'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('my', 'my', 'Burmese'), $choices, '', false, false);
     }
 
     public function testMultipleLanguagesIsNotIncluded()
     {
-        $form = $this->factory->create('language', 'language');
+        $form = $this->factory->create('Symfony\Component\Form\Extension\Core\Type\LanguageType', 'Symfony\Component\Form\Extension\Core\Type\LanguageType');
         $view = $form->createView();
         $choices = $view->vars['choices'];
 
-        $this->assertNotContains(new ChoiceView('Mehrsprachig', 'mul', 'mul'), $choices, '', false, false);
+        $this->assertNotContains(new ChoiceView('mul', 'mul', 'Mehrsprachig'), $choices, '', false, false);
     }
 }

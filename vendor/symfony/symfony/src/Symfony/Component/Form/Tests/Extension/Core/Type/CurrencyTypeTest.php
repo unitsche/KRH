@@ -24,14 +24,24 @@ class CurrencyTypeTest extends TestCase
         parent::setUp();
     }
 
-    public function testCurrenciesAreSelectable()
+    /**
+     * @group legacy
+     */
+    public function testLegacyName()
     {
         $form = $this->factory->create('currency');
+
+        $this->assertSame('currency', $form->getConfig()->getType()->getName());
+    }
+
+    public function testCurrenciesAreSelectable()
+    {
+        $form = $this->factory->create('Symfony\Component\Form\Extension\Core\Type\CurrencyType');
         $view = $form->createView();
         $choices = $view->vars['choices'];
 
-        $this->assertContains(new ChoiceView('Euro', 'EUR', 'EUR'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('US Dollar', 'USD', 'USD'), $choices, '', false, false);
-        $this->assertContains(new ChoiceView('Slovenian Tolar', 'SIT', 'SIT'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('EUR', 'EUR', 'Euro'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('USD', 'USD', 'US Dollar'), $choices, '', false, false);
+        $this->assertContains(new ChoiceView('SIT', 'SIT', 'Slovenian Tolar'), $choices, '', false, false);
     }
 }

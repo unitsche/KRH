@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tasks successfully created!{% endblock %}
+
+{% block body %}
+
+<div class="row">
+<div class="large-12 columns">
+<img src="{{ asset('./img/ardeche.jpg') }}" />
+
+<hr>
+</div>
+</div>
+
+<div class="row">
+ <div class="small-12 columns">
+   <h2>Übersicht Aufgaben</h2>
+ </div>
+</div>
+
+<div class="row">
+ <div class="small-12 columns">
+    {% for task in tasks %}
+        <li><a href="{{ path('task_success', {'slug': task.slug}) }}">{{ task.task|e }}</a> fällig am: {{ task.duedate|date("d.m.Y") }}</li>
+    {% endfor %}
+ </div>
+</div>
+
+<footer class="row">
+
+</footer>
+<script>
+  document.write('<script src=js/vendor/' +
+  ('__proto__' in {} ? 'zepto' : 'jquery') +
+  '.js><\/script>')
+  </script>
+<script src="{{ asset('js/vendor/jquery.js') }}"></script>
+<script src="{{ asset ('js/foundation.min.js') }}"></script>
+<script>
+    $(document).foundation();
+  </script>
+<script src="../assets/js/templates/jquery.js"></script>
+<script src="../assets/js/templates/foundation.js"></script>
+<script>
+      $(document).foundation();
+
+      var doc = document.documentElement;
+      doc.setAttribute('data-useragent', navigator.userAgent);
+    </script>
+{% endblock %}

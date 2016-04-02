@@ -49,8 +49,6 @@ class XmlDumperTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAddService()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $container = include self::$fixturesPath.'/containers/legacy-container9.php';
         $dumper = new XmlDumper($container);
 
@@ -182,5 +180,13 @@ class XmlDumperTest extends \PHPUnit_Framework_TestCase
         $dumper = new XmlDumper($container);
 
         $this->assertEquals(file_get_contents(self::$fixturesPath.'/xml/services21.xml'), $dumper->dump());
+    }
+
+    public function testDumpAutowireData()
+    {
+        $container = include self::$fixturesPath.'/containers/container24.php';
+        $dumper = new XmlDumper($container);
+
+        $this->assertEquals(file_get_contents(self::$fixturesPath.'/xml/services24.xml'), $dumper->dump());
     }
 }

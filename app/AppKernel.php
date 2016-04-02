@@ -19,6 +19,11 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             new Knp\DoctrineBehaviors\Bundle\DoctrineBehaviorsBundle(),
             new unBundle\unBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            new unBlogBundle\unBlogBundle(),
+            new unHelperBundle\unHelperBundle(),
+            new OCPlatformBundle\OCPlatformBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
@@ -26,6 +31,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
         }
 
         return $bundles;

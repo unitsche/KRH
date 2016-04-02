@@ -1,0 +1,105 @@
+<?php
+
+namespace unBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\EntityRepository;
+use Gedmo\Mapping\Annotation as Gedmo; // gedmo annotations
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="task")
+ * @ORM\Entity(repositoryClass="unBundle\Entity\TaskRepository")
+ */
+class Task
+{
+
+     /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")     
+     */
+    protected $id;  
+    
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     * @Gedmo\Translatable
+     */  
+    protected $task;
+
+    /**
+     * @ORM\Column(type="datetime") 
+     */    
+    protected $dueDate;
+
+   /**
+     * @ORM\Column(type="string", length=120)
+     * @Gedmo\Slug(fields={"task"}, updatable=false, separator="-")
+     */ 
+    protected $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="tasks")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $category;
+
+
+    public function getTask()
+    {
+        return $this->task;
+    }
+
+    public function setTask($task)
+    {
+        $this->task = $task;
+    }
+
+
+    public function getDueDate()
+    {
+        return $this->dueDate;
+    }
+
+    public function setDueDate(\DateTime $dueDate = null)
+    {
+        $this->dueDate = $dueDate;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return Task
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+}

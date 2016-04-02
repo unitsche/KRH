@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task Form{% endblock %}
+
+
+{% block body %}
+<div class="row">
+<div class="large-6 columns">
+<h3>Task Creation Form</h3>
+
+{{ form_start(form) }}
+	
+        {{ form_label(form.task) }}
+        {{ form_errors(form.task) }}
+        {{ form_widget(form.task) }}
+
+        {{ form_label(form.dueDate, "Fällig am:") }}
+        {{ form_errors(form.dueDate) }}
+        {{ form_widget(form.dueDate) }}
+
+        {{ form_widget(form.save) }}
+
+{{ form_end(form) }}
+</div>
+<div class="large-6 columns">
+<p>Lorem ipsum adhoc. THE DESCENT WAS stunning. Chris Tarbell, a special agent from the New York FBI office, was in a window seat, watching a green anomaly in a sea of blue as it resolved into Iceland’s severe, beautiful landscape.<br/> On approach to Keflavík International Airport, he could now see the city of Reykjavik coming into view. And just beyond that, perched on the edge of a moss-covered lava field: the massive matte-white box that housed the Thor Data Center. That’s why Tarbell and two US attorneys had come all this way. THE DESCENT WAS stunning.<br/> <b>Uli Nitsche</b> a special agent from the New York FBI office, was in a window seat, watching a green anomaly in a sea of blue as it resolved into Iceland’s severe, beautiful landscape.</p><p>On approach to Keflavík International Airport, he could now see the city of Reykjavik coming into view. And just beyond that, perched on the edge of a moss-covered lava field: the massive matte-white box that housed the Thor Data Center.</p> That’s why Tarbell and two US attorneys had come all this way. THE DESCENT WAS stunning. Chris Tarbell, a special agent from the New York FBI office, was in a window seat, watching a green anomaly in a sea of blue as it resolved into Iceland’s severe, beautiful landscape. On approach to Keflavík International Airport, he could now see the city of Reykjavik coming into view. And just beyond that, perched on the edge of a moss-covered lava field: the massive matte-white box that housed the Thor Data Center. That’s why Tarbell and two US attorneys had come all this way...</p>
+</div>
+</div>
+{% endblock %}

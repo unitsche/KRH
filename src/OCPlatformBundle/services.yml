@@ -1,0 +1,6 @@
+services:
+    ocplatform.doctrine.notification:
+        class: OCPlatformBundle\DoctrineListener\ApplicationNotification
+        arguments: [@mailer]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

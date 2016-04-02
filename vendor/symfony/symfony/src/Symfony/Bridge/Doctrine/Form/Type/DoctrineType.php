@@ -87,19 +87,19 @@ abstract class DoctrineType extends AbstractType
      */
     public static function createChoiceName($choice, $key, $value)
     {
-        return (string) $value;
+        return str_replace('-', '_', (string) $value);
     }
 
     /**
      * Gets important parts from QueryBuilder that will allow to cache its results.
      * For instance in ORM two query builders with an equal SQL string and
      * equal parameters are considered to be equal.
-     * 
+     *
      * @param object $queryBuilder
-     * 
+     *
      * @return array|false Array with important QueryBuilder parts or false if
      *                     they can't be determined
-     * 
+     *
      * @internal This method is public to be usable as callback. It should not
      *           be used in user code.
      */
@@ -111,7 +111,12 @@ abstract class DoctrineType extends AbstractType
     public function __construct(ManagerRegistry $registry, PropertyAccessorInterface $propertyAccessor = null, ChoiceListFactoryInterface $choiceListFactory = null)
     {
         $this->registry = $registry;
-        $this->choiceListFactory = $choiceListFactory ?: new PropertyAccessDecorator(new DefaultChoiceListFactory(), $propertyAccessor);
+        $this->choiceListFactory = $choiceListFactory ?: new CachingFactoryDecorator(
+            new PropertyAccessDecorator(
+                new DefaultChoiceListFactory(),
+                $propertyAccessor
+            )
+        );
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -136,7 +141,6 @@ abstract class DoctrineType extends AbstractType
 
             // Unless the choices are given explicitly, load them on demand
             if (null === $options['choices']) {
-
                 $hash = null;
                 $qbParts = null;
 
@@ -144,7 +148,6 @@ abstract class DoctrineType extends AbstractType
                 // also if concrete Type can return important QueryBuilder parts to generate
                 // hash key we go for it as well
                 if (!$options['query_builder'] || false !== ($qbParts = $type->getQueryBuilderPartsForCachingHash($options['query_builder']))) {
-
                     $hash = CachingFactoryDecorator::generateHash(array(
                         $options['em'],
                         $options['class'],
@@ -248,7 +251,7 @@ abstract class DoctrineType extends AbstractType
         // deprecation note
         $propertyNormalizer = function (Options $options, $propertyName) {
             if ($propertyName) {
-                trigger_error('The "property" option is deprecated since version 2.7 and will be removed in 3.0. Use "choice_label" instead.', E_USER_DEPRECATED);
+                @trigger_error('The "property" option is deprecated since version 2.7 and will be removed in 3.0. Use "choice_label" instead.', E_USER_DEPRECATED);
             }
 
             return $propertyName;
@@ -267,7 +270,7 @@ abstract class DoctrineType extends AbstractType
         // deprecation note
         $loaderNormalizer = function (Options $options, $loader) {
             if ($loader) {
-                trigger_error('The "loader" option is deprecated since version 2.7 and will be removed in 3.0. Override getLoader() instead.', E_USER_DEPRECATED);
+                @trigger_error('The "loader" option is deprecated since version 2.7 and will be removed in 3.0. Override getLoader() instead.', E_USER_DEPRECATED);
             }
 
             return $loader;
@@ -335,6 +338,6 @@ abstract class DoctrineType extends AbstractType
 
     public function getParent()
     {
-        return 'choice';
+        return 'Symfony\Component\Form\Extension\Core\Type\ChoiceType';
     }
 }

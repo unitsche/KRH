@@ -6,7 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use unBundle\Entity\Vocabulary;^
+use unBundle\Entity\Vocabulary;
 
 class SecurityController extends Controller
 {
@@ -16,9 +16,6 @@ class SecurityController extends Controller
     public function loginAction(Request $request)
     {
     }
-
-
-
 
     /**
      * @Route("/login_check", name="login_check")

@@ -49,7 +49,7 @@ class XmlFileLoader extends FileLoader
         $this->parseImports($xml, $path);
 
         // parameters
-        $this->parseParameters($xml, $path);
+        $this->parseParameters($xml);
 
         // extensions
         $this->loadFromExtensions($xml);
@@ -70,9 +70,8 @@ class XmlFileLoader extends FileLoader
      * Parses parameters.
      *
      * @param \DOMDocument $xml
-     * @param string       $file
      */
-    private function parseParameters(\DOMDocument $xml, $file)
+    private function parseParameters(\DOMDocument $xml)
     {
         if ($parameters = $this->getChildren($xml->documentElement, 'parameters')) {
             $this->container->getParameterBag()->add($this->getArgumentsAsPhp($parameters[0], 'parameter'));
@@ -94,8 +93,9 @@ class XmlFileLoader extends FileLoader
             return;
         }
 
+        $defaultDirectory = dirname($file);
         foreach ($imports as $import) {
-            $this->setCurrentDir(dirname($file));
+            $this->setCurrentDir($defaultDirectory);
             $this->import($import->getAttribute('resource'), null, (bool) XmlUtils::phpize($import->getAttribute('ignore-errors')), $file);
         }
     }
@@ -126,10 +126,11 @@ class XmlFileLoader extends FileLoader
      * Parses an individual Definition.
      *
      * @param \DOMElement $service
+     * @param string      $file
      *
      * @return Definition|null
      */
-    private function parseDefinition(\DOMElement $service)
+    private function parseDefinition(\DOMElement $service, $file)
     {
         if ($alias = $service->getAttribute('alias')) {
             $public = true;
@@ -147,19 +148,46 @@ class XmlFileLoader extends FileLoader
             $definition = new Definition();
         }
 
-        foreach (array('class', 'scope', 'public', 'factory-class', 'factory-method', 'factory-service', 'synthetic', 'lazy', 'abstract') as $key) {
+        foreach (array('class', 'shared', 'public', 'factory-class', 'factory-method', 'factory-service', 'synthetic', 'lazy', 'abstract') as $key) {
             if ($value = $service->getAttribute($key)) {
+                if (in_array($key, array('factory-class', 'factory-method', 'factory-service'))) {
+                    @trigger_error(sprintf('The "%s" attribute of service "%s" in file "%s" is deprecated since version 2.6 and will be removed in 3.0. Use the "factory" element instead.', $key, (string) $service->getAttribute('id'), $file), E_USER_DEPRECATED);
+                }
                 $method = 'set'.str_replace('-', '', $key);
                 $definition->$method(XmlUtils::phpize($value));
             }
         }
 
+        if ($value = $service->getAttribute('autowire')) {
+            $definition->setAutowired(XmlUtils::phpize($value));
+        }
+
+        if ($value = $service->getAttribute('scope')) {
+            $triggerDeprecation = 'request' !== (string) $service->getAttribute('id');
+
+            if ($triggerDeprecation) {
+                @trigger_error(sprintf('The "scope" attribute of service "%s" in file "%s" is deprecated since version 2.8 and will be removed in 3.0.', (string) $service->getAttribute('id'), $file), E_USER_DEPRECATED);
+            }
+
+            $definition->setScope(XmlUtils::phpize($value), false);
+        }
+
         if ($value = $service->getAttribute('synchronized')) {
-            $definition->setSynchronized(XmlUtils::phpize($value), 'request' !== (string) $service->getAttribute('id'));
+            $triggerDeprecation = 'request' !== (string) $service->getAttribute('id');
+
+            if ($triggerDeprecation) {
+                @trigger_error(sprintf('The "synchronized" attribute of service "%s" in file "%s" is deprecated since version 2.7 and will be removed in 3.0.', (string) $service->getAttribute('id'), $file), E_USER_DEPRECATED);
+            }
+
+            $definition->setSynchronized(XmlUtils::phpize($value), $triggerDeprecation);
         }
 
         if ($files = $this->getChildren($service, 'file')) {
             $definition->setFile($files[0]->nodeValue);
+        }
+
+        if ($deprecated = $this->getChildren($service, 'deprecated')) {
+            $definition->setDeprecated(true, $deprecated[0]->nodeValue);
         }
 
         $definition->setArguments($this->getArgumentsAsPhp($service, 'argument'));
@@ -173,7 +201,7 @@ class XmlFileLoader extends FileLoader
                 $factoryService = $this->getChildren($factory, 'service');
 
                 if (isset($factoryService[0])) {
-                    $class = $this->parseDefinition($factoryService[0]);
+                    $class = $this->parseDefinition($factoryService[0], $file);
                 } elseif ($childService = $factory->getAttribute('service')) {
                     $class = new Reference($childService, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, false);
                 } else {
@@ -192,7 +220,7 @@ class XmlFileLoader extends FileLoader
                 $configuratorService = $this->getChildren($configurator, 'service');
 
                 if (isset($configuratorService[0])) {
-                    $class = $this->parseDefinition($configuratorService[0]);
+                    $class = $this->parseDefinition($configuratorService[0], $file);
                 } elseif ($childService = $configurator->getAttribute('service')) {
                     $class = new Reference($childService, ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE, false);
                 } else {
@@ -221,19 +249,28 @@ class XmlFileLoader extends FileLoader
                 $parameters[$name] = XmlUtils::phpize($node->nodeValue);
             }
 
+            if ('' === $tag->getAttribute('name')) {
+                throw new InvalidArgumentException(sprintf('The tag name for service "%s" in %s must be a non-empty string.', (string) $service->getAttribute('id'), $file));
+            }
+
             $definition->addTag($tag->getAttribute('name'), $parameters);
+        }
+
+        foreach ($this->getChildren($service, 'autowiring-type') as $type) {
+            $definition->addAutowiringType($type->textContent);
         }
 
         if ($value = $service->getAttribute('decorates')) {
             $renameId = $service->hasAttribute('decoration-inner-name') ? $service->getAttribute('decoration-inner-name') : null;
-            $definition->setDecoratedService($value, $renameId);
+            $priority = $service->hasAttribute('decoration-priority') ? $service->getAttribute('decoration-priority') : 0;
+            $definition->setDecoratedService($value, $renameId, $priority);
         }
 
         return $definition;
     }
 
     /**
-     * Parses a XML file to a \DOMDocument
+     * Parses a XML file to a \DOMDocument.
      *
      * @param string $file Path to a file
      *
@@ -392,7 +429,7 @@ class XmlFileLoader extends FileLoader
     }
 
     /**
-     * Get child elements by name
+     * Get child elements by name.
      *
      * @param \DOMNode $node
      * @param mixed    $name

@@ -42,7 +42,7 @@ class HelpCommand extends Command
                 new InputOption('raw', null, InputOption::VALUE_NONE, 'To output raw command help'),
             ))
             ->setDescription('Displays help for a command')
-            ->setHelp(<<<EOF
+            ->setHelp(<<<'EOF'
 The <info>%command.name%</info> command displays help for a given command:
 
   <info>php %command.full_name% list</info>
@@ -77,7 +77,7 @@ EOF
         }
 
         if ($input->getOption('xml')) {
-            trigger_error('The --xml option was deprecated in version 2.7 and will be removed in version 3.0. Use the --format option instead.', E_USER_DEPRECATED);
+            @trigger_error('The --xml option was deprecated in version 2.7 and will be removed in version 3.0. Use the --format option instead.', E_USER_DEPRECATED);
 
             $input->setOption('format', 'xml');
         }

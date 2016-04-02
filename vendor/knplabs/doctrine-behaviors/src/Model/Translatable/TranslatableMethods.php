@@ -103,11 +103,18 @@ trait TranslatableMethods
             return $translation;
         }
 
-        if ($fallbackToDefault && $defaultTranslation = $this->findTranslationByLocale($this->getDefaultLocale(), false)) {
-            return $defaultTranslation;
+        if ($fallbackToDefault) {
+            if (($fallbackLocale = $this->computeFallbackLocale($locale))
+                && ($translation = $this->findTranslationByLocale($fallbackLocale))) {
+                return $translation;
+            }
+
+            if ($defaultTranslation = $this->findTranslationByLocale($this->getDefaultLocale(), false)) {
+                return $defaultTranslation;
+            }
         }
 
-        $class       = self::getTranslationEntityClass();
+        $class       = static::getTranslationEntityClass();
         $translation = new $class();
         $translation->setLocale($locale);
 
@@ -207,5 +214,14 @@ trait TranslatableMethods
         if ($withNewTranslations) {
             return $this->getNewTranslations()->get($locale);
         }
+    }
+
+    protected function computeFallbackLocale($locale)
+    {
+        if (strrchr($locale, '_') !== false) {
+            return substr($locale, 0, -strlen(strrchr($locale, '_')));
+        }
+
+        return false;
     }
 }

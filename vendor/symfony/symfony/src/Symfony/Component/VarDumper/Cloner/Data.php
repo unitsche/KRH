@@ -53,7 +53,7 @@ class Data
     }
 
     /**
-     * Limits the numbers of elements per depth level.
+     * Limits the number of elements per depth level.
      *
      * @param int $maxItemsPerDepth The max number of items dumped per depth level.
      *
@@ -95,7 +95,7 @@ class Data
      */
     public function getLimitedClone($maxDepth, $maxItemsPerDepth, $useRefHandles = true)
     {
-        trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7 and will be removed in 3.0. Use withMaxDepth, withMaxItemsPerDepth or withRefHandles methods instead.', E_USER_DEPRECATED);
+        @trigger_error('The '.__METHOD__.' method is deprecated since Symfony 2.7 and will be removed in 3.0. Use withMaxDepth, withMaxItemsPerDepth or withRefHandles methods instead.', E_USER_DEPRECATED);
 
         $data = clone $this;
         $data->maxDepth = (int) $maxDepth;
