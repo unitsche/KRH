@@ -105,6 +105,7 @@ public function indexAction($page)
 
     if ($form->handleRequest($request)->isValid()) {
       // On l'enregistre notre objet $advert dans la base de données, par exemple
+      
       $em = $this->getDoctrine()->getManager();
       $em->persist($advert);
       $em->flush();
@@ -120,4 +121,36 @@ public function indexAction($page)
       'form' => $form->createView(),
     ));
   }
+
+  public function deleteAction($id, Request $request)
+  {
+    $em = $this->getDoctrine()->getManager();
+
+    // On récupère l'annonce $id
+    $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
+
+    if (null === $advert) {
+      throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+    }
+
+    // On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'annonce contre cette faille
+    $form = $this->createFormBuilder()->getForm();
+
+    if ($form->handleRequest($request)->isValid()) {
+      $em->remove($advert);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('info', "L'annonce a bien été supprimée.");
+
+      return $this->redirect($this->generateUrl('oc_platform_home'));
+    }
+
+    // Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+    return $this->render('OCPlatformBundle:Advert:delete.html.twig', array(
+      'advert' => $advert,
+      'form'   => $form->createView()
+    ));
+  }
+
 }

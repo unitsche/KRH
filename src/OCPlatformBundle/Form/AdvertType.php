@@ -22,6 +22,11 @@ class AdvertType extends AbstractType
             ->add('author',   'text')
             ->add('content',  'textarea')
             ->add('image',      new ImageType())
+            ->add('tags', 'collection', array(
+              'type'         => new TagType(),
+              'allow_add'    => true,
+              'allow_delete' => true,
+              ))
             ->add('tags', 'entity', array(
               'class'    => 'OCPlatformBundle:Tag',
               'property' => 'name',

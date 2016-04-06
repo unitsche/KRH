@@ -5,6 +5,7 @@ namespace OCPlatformBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Advert
@@ -48,7 +49,8 @@ class Advert
     private $tags;
 
     /**
-    * @ORM\OneToOne(targetEntity="OCPlatformBundle\Entity\Image", cascade={"persist"})
+    * @ORM\OneToOne(targetEntity="OCPlatformBundle\Entity\Image", cascade={"persist", "remove"})
+    * @Assert\Valid()
     */
     private $image;
 
@@ -70,6 +72,7 @@ class Advert
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\DateTime()
      */
     private $datetime;
 
@@ -82,6 +85,7 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\Length(min=10, max=255)
      */
     private $title;
 
@@ -95,6 +99,7 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="author", type="string", length=255)
+     * @Assert\Length(min=2, max=100)
      */
     private $author;
 
@@ -102,6 +107,7 @@ class Advert
      * @var string
      *
      * @ORM\Column(name="content", type="text")
+     * @Assert\NotBlank()
      */
     private $content;
 
